@@ -7,7 +7,8 @@ export default [
     layout("auth/layout.tsx", [
 
         route("login", "./auth/login.tsx"),
-        route("logout", "./auth/logout.tsx")
+        route("logout", "./auth/logout.tsx"),
+        route("register", "./auth/register.tsx"),
         
     ])
 ] satisfies RouteConfig;

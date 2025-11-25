@@ -10,7 +10,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import "./app.css";
+/* import "./app.css"; */
 import { createClient } from "./utils/supabase.server";
 
 export const links: Route.LinksFunction = () => [
@@ -46,13 +46,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export async function loader({request}: Route.LoaderArgs) {
   
-  console.log(request.url)
-  
-  console.log("Loader in Root")
-
   const url = new URL(request.url)
 
-  if(url.pathname === "/login" || url.pathname === "/logout"){
+  // Poikkeukset tunnistautumiselle
+  if(url.pathname === "/login" || url.pathname === "/register"){
     return
   }
 

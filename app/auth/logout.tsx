@@ -19,8 +19,6 @@ export function Logout() {
 
     return <>
 
-
-
         <Link to={"/login"}> Kirjaudu sisään uudelleen</Link>
 
     </>
