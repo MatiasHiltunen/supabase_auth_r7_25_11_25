@@ -4,12 +4,14 @@ import {
   Links,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { createClient } from "./utils/supabase.server";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,13 +44,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export async function loader({request}: Route.LoaderArgs) {
+  
+  console.log(request.url)
+  
+  console.log("Loader in Root")
+
+  const url = new URL(request.url)
+
+  if(url.pathname === "/login" || url.pathname === "/logout"){
+    return
+  }
+
+  const {supabase} = createClient(request)
+
+  const {data, error} = await supabase.auth.getSession()
+
+  if(data.session == null){
+    return redirect("/login")
+  }
+
+  return {isAuth: !!data.session}
+}
+
+export default function App({loaderData}:Route.ComponentProps) {
 
   return <>
     <nav>
       <Link to="/">Koti</Link>
       <Link to="/chat"> Chat</Link>
       <Link to="/dashboard">Hallintapaneeli</Link>
+
+      {loaderData?.isAuth ? <Link to="/logout"> Kirjaudu ulos </Link> : <Link to={"/login"}> Kirjaudu sisään</Link> }
     </nav>
     <main className="content"><Outlet /></main>
   </>;
