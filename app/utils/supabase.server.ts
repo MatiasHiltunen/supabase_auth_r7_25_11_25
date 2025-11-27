@@ -12,6 +12,11 @@ export function createClient(request: Request) {
     process.env.VITE_SUPABASE_URL!,
     process.env.VITE_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: {
+        httpOnly: true,
+        sameSite: true,
+        secure: true
+      },
       cookies: {
         getAll() {
           return parseCookieHeader(request.headers.get("Cookie") ?? "") as {
