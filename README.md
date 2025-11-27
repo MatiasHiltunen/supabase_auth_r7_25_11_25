@@ -5,7 +5,7 @@
 ### Prerequisities
 
 1. Active supabase project: https://supabase.com/
-- Create `.env` file based on `.env.example` and add your supabase details there from supabase: `dashboard > connect`
+- Create `.env` similar to `.env.example` and add your details there from supabase: `dashboard > connect > App frameworks`
 2. Nodejs
 
 
